@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		一、面向对象的定义：
+			面向对象是一种*对现实世界理解和抽象*的方法，是计算机编程技术发展到一定阶段后的产物。
+			把功能类似或者相同定位代码抽离出来，归为一类，把一些描述性的特征挂在这个类的原型上的一种编程思想。
+		二、属性：属性前面是有主的。
+			对象（obj,arr,function）下才能有属性
+			变量：var arr前面是没有对象的（没有主的）
+			方法：
+					obj.fn=function(){
+						alert(this);
+					}
+				方法前面有主，默认this指向主
+			函数：function fn(){}
+				函数前没主，默认this指向window
+		三、构造函数：构造对象的函数
+			function Teacher（name,age）{
+				this.name=name;
+				this.age=age;
+				this.say=function(){
+					alert('我的名字叫'+this.name);
+				}
+			}
+			var t1=new Teacher('陈斌'，80);
+			t1.say();
+			consoloe.log(t1);
+		四、new:函数的运算符
+			1、new过之后，函数的返回值就变成了对象，函数里的this全部指向这个对象
+			2、默认return这个对象。
+			3、我们叫f是fn的实例化对象
+				eg：var f = new fn;
+			4、如果在构造函数中return了一个简单类型的话，那么返回值还是这个对象。
+				如果构造函数中return了一个符合类型（包括函数）的话，那么些什么返回值就是什么。
+			5、new函数之后就叫实例化，它的返回值，就是实例化对象。
+			6、没有new的时候默认返回值：undefined，this指向window
+				new之后的返回值：这个对象，this只想这个对象
+				return 简单类型->这个对象
+				return 复合类型->符合类型
+			eg：function Person(name,age){//构造函数
+				this.name=name;
+				this.age=age;
+				this.say=function(){
+					alert(this.name);
+					var t=new Person('陈斌',80);
+					var t2 = new Person('丽斯',16);
+				}
+			}	
+			t.say和t2的say是不相等的，因为每new一次的时候都创建了一个say；
+			这样会浪费内存和空间；
+			eg:var arr=[];
+			var arr2=[];
+			console.log(arr.push == arr2.push)//true
+		五、原型(prototype)
+			1.定义：函数的一个属性，*值为对象*属于添加类样式，之前写的：行简样式，专门处理性能问题
+			2.__proto__:原型链：对象身上没有原型但是有原型链，函数既有原型又有原型链。
+			3.f1.say->f1.__proto__->Fn.prototype
+			4.实例化对象的原型链==构造函数的原型，原型链就是实例化对象与构造函数之间的桥梁。
+					f1.__proto__ === Fn.prototype
+				eg:function Fn(name){
+					this.name = name;
+				}；
+				Fn.prototype.say=function(){
+					alert(this.name);
+				}
+				var f1 = new Fn('小管管');
+				var f2 = new Fn('小脏脏');
+				f1.say();
+				f2.say();
+			5.属性放在类里面，方法挂在原型上
+			6.原型的优先级：
+				实例化对象上就有方法>构造函数原型下的方法>object.prototype
+				对象找链->对象找链 -> 构造函数的原型 -> 构造函数原型下的链 -> 构造函数的原型->构造函数原型下的链->构造函数的原型
+				构造函数的原型永远都是给实例化对象使用的。
+				如果直接使用Object那么会找到Function
+				、                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         如果不直接使用，那么到Object就终止。
+	</body>
+</html>
